@@ -35,6 +35,22 @@ Here is room for your inspiration, which is very much appreciated! Please be pat
 
 ## <a id='FolderStructure'></a> Folder structure
 ```
+|   AnalysisofMicrographs.html                     html-transformed output of the .ipynb-file for representation purposes
+|   AnalysisOfMicrographs.ipynb                    Main .ipynb-file explaining tasks and giving example code to solve them
+|   LICENSE
+|   README.md
+|
++---Figures
+|
++---Figures_scientific
+|
++---Icons
++---ModulesExternal
+|   \---Data
+|
++---ModulesOwn                                     Functions / methods developed for Analysis of Micrographs
+|
+\---requirements
 To be detailed soon.
 ```
 [//]: # (tree /a /f)
