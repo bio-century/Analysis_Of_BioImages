@@ -1,0 +1,149 @@
+{
+    "channels": [
+        {
+            "active": true,
+            "coefficient": 1.0,
+            "color": "FF0000",
+            "emissionWave": null,
+            "family": "linear",
+            "inverted": false,
+            "label": "Hoechst",
+            "reverseIntensity": false,
+            "window": {
+                "end": 11926.0,
+                "max": 11926.0,
+                "min": 472.0,
+                "start": 472.0
+            }
+        },
+        {
+            "active": true,
+            "coefficient": 1.0,
+            "color": "00FF00",
+            "emissionWave": null,
+            "family": "linear",
+            "inverted": false,
+            "label": "ERSyto",
+            "reverseIntensity": false,
+            "window": {
+                "end": 46026.0,
+                "max": 46026.0,
+                "min": 579.0,
+                "start": 579.0
+            }
+        },
+        {
+            "active": true,
+            "coefficient": 1.0,
+            "color": "0000FF",
+            "emissionWave": null,
+            "family": "linear",
+            "inverted": false,
+            "label": "ERSytoBleed",
+            "reverseIntensity": false,
+            "window": {
+                "end": 55287.0,
+                "max": 55287.0,
+                "min": 519.0,
+                "start": 519.0
+            }
+        },
+        {
+            "active": false,
+            "coefficient": 1.0,
+            "color": "0000FF",
+            "emissionWave": null,
+            "family": "linear",
+            "inverted": false,
+            "label": "PhGolgi",
+            "reverseIntensity": false,
+            "window": {
+                "end": 62347.0,
+                "max": 62347.0,
+                "min": 829.0,
+                "start": 829.0
+            }
+        },
+        {
+            "active": false,
+            "coefficient": 1.0,
+            "color": "0000FF",
+            "emissionWave": null,
+            "family": "linear",
+            "inverted": false,
+            "label": "Mito",
+            "reverseIntensity": false,
+            "window": {
+                "end": 56844.0,
+                "max": 56844.0,
+                "min": 582.0,
+                "start": 582.0
+            }
+        }
+    ],
+    "id": 3232695,
+    "init_zoom": 0,
+    "interpolate": true,
+    "meta": {
+        "datasetDescription": "",
+        "datasetId": null,
+        "datasetName": "Multiple",
+        "imageAuthor": "Public data",
+        "imageDescription": "",
+        "imageId": 3232695,
+        "imageName": "41744_illum_corrected [Well G9, Field 7]",
+        "imageTimestamp": 1488908833.0,
+        "pixelsType": "uint16",
+        "projectDescription": "",
+        "projectId": null,
+        "projectName": "Multiple",
+        "wellId": 1315626,
+        "wellSampleId": ""
+    },
+    "perms": {
+        "canAnnotate": false,
+        "canDelete": false,
+        "canEdit": false,
+        "canLink": false
+    },
+    "pixel_range": [
+        0,
+        65535
+    ],
+    "pixel_size": {
+        "x": null,
+        "y": null,
+        "z": null
+    },
+    "rdefs": {
+        "defaultT": 0,
+        "defaultZ": 0,
+        "invertAxis": false,
+        "model": "color",
+        "projection": "normal"
+    },
+    "size": {
+        "c": 5,
+        "height": 1080,
+        "t": 1,
+        "width": 1080,
+        "z": 1
+    },
+    "split_channel": {
+        "c": {
+            "border": 2,
+            "gridx": 3,
+            "gridy": 2,
+            "height": 2166,
+            "width": 3248
+        },
+        "g": {
+            "border": 2,
+            "gridx": 3,
+            "gridy": 2,
+            "height": 2166,
+            "width": 3248
+        }
+    },
+    "tiles": false
+}
