@@ -1,3 +1,36 @@
+def calculateContourCurvature(contourPixels):
+    import numpy as np
+    # source of algorithms
+    # https://github.com/jmschabdach/caulobacter-curvature/blob/master/calculatingCellCurvature.py
+	# by Jenna Schabdach 2018
+
+
+
+    # Calculate components for curvature
+    # Get first derivatives in x and y
+    contourPixels = np.asarray(contourPixels)
+    dx = np.gradient(contourPixels[:, 0])
+    dy = np.gradient(contourPixels[:, 1])
+
+    # Get second derivatives in x and y
+    dx2 = np.gradient(dx)
+    dy2 = np.gradient(dy) 
+
+    # Calculate the curvature of the curve
+    contourCurvature = np.abs(dx2*dy - dx*dy2)/(dx*dx + dy*dy)**1.5
+    
+    # Threshold curvature values over 1 to be 1
+    for i in range(len(contourCurvature)):
+        if contourCurvature[i] > 1.0:
+            contourCurvature[i] = 1.0            
+    
+    # Since the contour points may not be integers, make sure they are
+    if type(contourPixels[0, 0]) is not int:
+        contourPixels = [[int(round(pt[1])), int(round(pt[0]))] for pt in contourPixels]
+
+    return contourCurvature, contourPixels
+
+
 def ellipseFit(myImage, myImageThresholded):
 	# sources of main algorithms
 	# https://www.kaggle.com/code/voglinio/separating-nuclei-masks-using-convexity-defects
