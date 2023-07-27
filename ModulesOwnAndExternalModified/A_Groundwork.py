@@ -31,7 +31,7 @@ def calculateContourCurvature(contourPixels):
     return contourCurvature, contourPixels
 
 
-def ellipseFit(myImage, myImageThresholded):
+def ellipseFit(myImage, myImageThresholded, areaMax = 2800):
 	# sources of main algorithms
 	# https://www.kaggle.com/code/voglinio/separating-nuclei-masks-using-convexity-defects
 	# User: Costas Voglis
@@ -45,16 +45,14 @@ def ellipseFit(myImage, myImageThresholded):
 	import matplotlib.pyplot as plt
 	from skimage.measure import regionprops
 	import math
+	import scipy.ndimage as ndimage
 
-	cellCount           = 0
+
 	contours, hierarchy = cv2.findContours(myImageThresholded.astype(np.uint8), 1, 2)
-	myMaskContoursAll   = np.zeros(myImage.shape)
-	numberOfObjects     = len(contours)
-	list_multicore      = []
+
 
 	for ii, cnt in enumerate(contours):
 		M               = cv2.moments(cnt)
-		area            = cv2.contourArea(cnt)
 		perimeter       = cv2.arcLength(cnt, True)
 		perimeter       = round(perimeter, 1)
 		
@@ -63,47 +61,47 @@ def ellipseFit(myImage, myImageThresholded):
 		if M['m00'] != 0.0:
 			x1 = int(M['m10'] / M['m00'])
 			y1 = int(M['m01'] / M['m00'])
-			x1_rounded = round(x1)
-			y1_rounded = round(y1)
 		myMaskZeros       = np.zeros(myImage.shape, np.uint8)
 		myMaskContoursTmp = cv2.drawContours(image = myMaskZeros, contours=[cnt], contourIdx = -1, color = (255, 255, 255), thickness = cv2.FILLED)
 		myMaskContours                           = np.zeros(myImage.shape)
 		myMaskContours[myMaskContoursTmp == 255] = 1
 		props = regionprops(myMaskContoursTmp, cache = False)
+		
 		prop = props[0]
+		# print(prop.area)
+		if  prop.area < areaMax:
 
+			# compute ellipse fit incl. major and minor axis
+			# see sources of main algorithms
+			ellipse = cv2.fitEllipse(cnt)
+			(xc, yc), (d1, d2), angle = ellipse
+			cv2.ellipse(myImage, ellipse, (0, 0, 170), 2)
+			rmajor = max(d1, d2) / 2
+			if angle > 90:
+				angle = angle - 90
+			else:
+				angle = angle + 90
+			x1 = xc + math.cos(math.radians(angle)) * rmajor
+			y1 = yc + math.sin(math.radians(angle)) * rmajor
+			x2 = xc + math.cos(math.radians(angle + 180)) * rmajor
+			y2 = yc + math.sin(math.radians(angle + 180)) * rmajor
+			cv2.line(myImage, (int(x1), int(y1)), (int(x2), int(y2)), (170, 0, 0), 2)
 
-		# compute ellipse fit incl. major and minor axis
-		# see sources of main algorithms
-		ellipse = cv2.fitEllipse(cnt)
-		(xc, yc), (d1, d2), angle = ellipse
-		cv2.ellipse(myImage, ellipse, (0, 0, 170), 2)
-		rmajor = max(d1, d2) / 2
-		if angle > 90:
-			angle = angle - 90
-		else:
-			angle = angle + 90
-		x1 = xc + math.cos(math.radians(angle)) * rmajor
-		y1 = yc + math.sin(math.radians(angle)) * rmajor
-		x2 = xc + math.cos(math.radians(angle + 180)) * rmajor
-		y2 = yc + math.sin(math.radians(angle + 180)) * rmajor
-		cv2.line(myImage, (int(x1), int(y1)), (int(x2), int(y2)), (170, 0, 0), 2)
+			rminor = min(d1, d2) / 2
+			if angle > 90:
+				angle = angle - 90
+			else:
+				angle = angle + 90
 
-		rminor = min(d1, d2) / 2
-		if angle > 90:
-			angle = angle - 90
-		else:
-			angle = angle + 90
+			x1 = xc + math.cos(math.radians(angle)) * rminor
+			y1 = yc + math.sin(math.radians(angle)) * rminor
+			x2 = xc + math.cos(math.radians(angle + 180)) * rminor
+			y2 = yc + math.sin(math.radians(angle + 180)) * rminor
+			cv2.line(myImage, (int(x1),int(y1)), (int(x2),int(y2)), (0, 170, 170), 2)
 
-		x1 = xc + math.cos(math.radians(angle)) * rminor
-		y1 = yc + math.sin(math.radians(angle)) * rminor
-		x2 = xc + math.cos(math.radians(angle + 180)) * rminor
-		y2 = yc + math.sin(math.radians(angle + 180)) * rminor
-		cv2.line(myImage, (int(x1),int(y1)), (int(x2),int(y2)), (0, 170, 170), 2)
-
-		# mark center
-		xc, yc = ellipse[0]
-		cv2.circle(myImage, (int(xc), int(yc)), 3, (255, 0, 0), -1)
+			# mark center
+			xc, yc = ellipse[0]
+			cv2.circle(myImage, (int(xc), int(yc)), 3, (255, 0, 0), -1)
 
 	return myImage
 
