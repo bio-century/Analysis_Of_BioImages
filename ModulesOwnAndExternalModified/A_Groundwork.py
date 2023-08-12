@@ -250,17 +250,18 @@ def identifyCellContoursAndAreaOverlays(myImage, myImageThresholded, dictThresho
 		celladd = round((prop.filled_area)/(meanFilledArea))
 
 		if  ratio_conv_filled > dictThresholdValues["gt2CellCluster"]:
-			myMaskContoursAll  = myMaskContoursAll + myMaskContours * 0.9
+			myMaskContoursAll  = myMaskContoursAll + myMaskContours * 0.9 * 255
 			cellCount=cellCount + celladd
 		elif  ratio_conv_filled > dictThresholdValues["2CellCluster"]:
-			myMaskContoursAll  = myMaskContoursAll + myMaskContours * 0.5
+			myMaskContoursAll  = myMaskContoursAll + myMaskContours * 0.5 * 255
 			cellCount = cellCount + celladd
 		else:
-			myMaskContoursAll  = myMaskContoursAll + myMaskContours * 0.2
+			myMaskContoursAll  = myMaskContoursAll + myMaskContours * 0.2 * 255
 			cellCount = cellCount + celladd
+		
 		myMaskContoursAll = cv2.drawContours(myMaskContoursAll, [cnt], -1, (0,0,255), 2)
-		cv2.putText(myMaskContoursAll, f'{ii + 1}', (x1, y1 + 5), cv2.FONT_HERSHEY_COMPLEX, 0.6, (150, 150, 150), 1)
-		cv2.putText(myMaskContoursAll, "%.3f" % ratio_conv_filled, (x1, y1+20), cv2.FONT_HERSHEY_COMPLEX, 0.6, (100, 0, 0), 1)
+		cv2.putText(myMaskContoursAll, f'{ii + 1}', (x1, y1 + 5), cv2.FONT_HERSHEY_COMPLEX, 0.6, (100, 255, 100), 1)
+		cv2.putText(myMaskContoursAll, "%.3f" % ratio_conv_filled, (x1, y1+20), cv2.FONT_HERSHEY_COMPLEX, 0.6, (255, 100, 100), 1)
 	return cellCount, contours, myImageContours, myMaskContoursAll
 
 
