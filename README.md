@@ -2,10 +2,10 @@
 
 # Abstract
 This project aims at analysing micrographs and other images of biological matter. The underlying data can be obtained freely from many scientific bioinformatics databases (check out my website www.bio-century.net for further info). This "Part 1" is a collection of Python-based example codes focussing on the Analysis of Micrographs on a very basic level. More parts are to come soon...<br>
-Goals and example code is presented in a Jupyter-Notebook-(.ipynb-)fileformat. Jupyter-NB or equivalent extensions in the IDE of your choice is thus required to modify it. 
-<br><br>
-Example of a test dataset identifying multi-nuclei overlays in fluorescence micrographs:<br>
-<img src="./Figures/readme_example.png" width="50%"><br>
+<center><img src="./Figures/readme_figure.png" width="70%"><br></center>
+Goals and example code is presented in a Jupyter-Notebook-(.ipynb-)fileformat. Jupyter-NB or equivalent extensions in the IDE of your choice is thus required to modify it. <br>
+<left><img src="./Figures/croppedCurvatureDetection.gif" width="10%"><br></>
+
 
 
 # Table of Content
