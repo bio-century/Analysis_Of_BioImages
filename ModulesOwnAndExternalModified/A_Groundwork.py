@@ -31,6 +31,42 @@ def calculateContourCurvature(contourPixels):
     return contourCurvature, contourPixels
 
 
+def centerOfMass(myImageThresholded):
+	# sources of main algorithms
+	# https://www.kaggle.com/code/voglinio/separating-nuclei-masks-using-convexity-defects
+	# User: Costas Voglis
+	# and
+	# https://stackoverflow.com/questions/62698756/opencv-calculating-orientation-angle-of-major-and-minor-axis-of-ellipse
+	# User: fmw42, Fred Weinhaus
+
+	import cv2
+	import numpy as np
+	import matplotlib.pyplot as plt
+	from skimage.measure import regionprops
+	import math
+
+	contours, hierarchy = cv2.findContours(myImageThresholded.astype(np.uint8), 1, 2)
+	x1_rounded = -1
+	y1_rounded = -1
+ 
+	for ii, cnt in enumerate(contours):
+		M               = cv2.moments(cnt)
+		area            = cv2.contourArea(cnt)
+		perimeter       = cv2.arcLength(cnt, True)
+		perimeter       = round(perimeter, 1)
+		
+		# compute center of mass
+		# see sources of main algorithms
+		if M['m00'] != 0.0:
+			x1 = int(M['m10'] / M['m00'])
+			y1 = int(M['m01'] / M['m00'])
+			x1_rounded = round(x1)
+			y1_rounded = round(y1)
+	del contours
+ 
+	return x1_rounded, y1_rounded
+
+
 def ellipseFit(myImage, myImageThresholded, areaMax = 2800):
 	# sources of main algorithms
 	# https://www.kaggle.com/code/voglinio/separating-nuclei-masks-using-convexity-defects
